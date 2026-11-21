@@ -2,8 +2,6 @@
 
 A Data Analytics project focused on analyzing customer churn patterns, customer retention, and subscription behavior using Google Sheets.
 
-## 🌐 Live Dashboard
-[View Customer Churn Analysis Website](https://brindhaArikrishnan.github.io/Customer-Churn-Analysis/)
 
 ## 📌 Project Overview
 This project analyzes customer data to identify churn patterns and understand factors associated with customer retention and customer loss.
