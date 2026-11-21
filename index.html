@@ -2,79 +2,87 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Customer Churn Analysis</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f3f6fb;
-      margin: 0;
-      padding: 40px 20px;
-      color: #222;
-    }
-    .container {
-      max-width: 850px;
-      margin: auto;
-      background: white;
-      padding: 30px;
-      border-radius: 16px;
-    }
-    h1 { color: #2457a7; }
-    .cards {
-      display: flex;
-      gap: 15px;
-      flex-wrap: wrap;
-    }
-    .card {
-      flex: 1;
-      min-width: 150px;
-      background: #eaf1ff;
-      padding: 20px;
-      border-radius: 12px;
-    }
-    .number {
-      font-size: 28px;
-      font-weight: bold;
-      color: #2457a7;
-    }
-    img {
-      width: 100%;
-      border-radius: 10px;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Customer Churn Analysis</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f4f7fb;color:#1e293b}
+header{background:#142d4e;color:white;padding:35px 8%}
+header h1{margin:0 0 10px}
+header p{color:#d2deef}
+.container{max-width:1150px;margin:auto;padding:30px 20px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px}
+.card{background:white;padding:24px;border-radius:14px;box-shadow:0 3px 12px #00008}
+.card h3{color:#64748b;font-size:14px}
+.number{font-size:32px;font-weight:bold;color:#2563eb}
+.panel{background:white;padding:22px;margin-top:22px;border-radius:14px;box-shadow:0 3px 12px #00008}
+.charts{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
+footer{text-align:center;padding:25px;color:#64748b}
+</style>
 </head>
 <body>
-  <div class="container">
-    <h1>Customer Churn Analysis</h1>
-    <p>Data Analytics Internship Project</p>
+<header>
+<h1>Customer Churn Analysis</h1>
+<p>Data Analytics Internship Project | Google Sheets</p>
+</header>
+<div class="container">
+<div class="cards">
+<div class="card"><h3>Total Customers</h3><div class="number">600</div></div>
+<div class="card"><h3>Churned Customers</h3><div class="number">247</div></div>
+<div class="card"><h3>Retained Customers</h3><div class="number">353</div></div>
+<div class="card"><h3>Churn Rate</h3><div class="number">41.17%</div></div>
+</div>
 
-    <h2>Project Overview</h2>
-    <p>This project analyzes customer churn patterns to understand customer retention and identify factors associated with customers leaving a subscription service.</p>
+<div class="panel">
+<h2>Churn vs Retention</h2>
+<div class="charts">
+<div><canvas id="churnChart"></canvas></div>
+<div><canvas id="contractChart"></canvas></div>
+</div>
+</div>
 
-    <div class="cards">
-      <div class="card">
-        <p>Total Customers</p>
-        <div class="number">600</div>
-      </div>
-      <div class="card">
-        <p>Churned Customers</p>
-        <div class="number">247</div>
-      </div>
-      <div class="card">
-        <p>Retention Rate</p>
-        <div class="number">58.83%</div>
-      </div>
-    </div>
+<div class="panel">
+<h2>Contract Analysis</h2>
+<p>Month-to-month customers have a higher churn rate compared to customers on yearly contracts.</p>
+<div class="charts">
+<div><canvas id="contractRate"></canvas></div>
+<div><canvas id="subscriptionRate"></canvas></div>
+</div>
+</div>
 
-    <h2>Key Finding</h2>
-    <p>Month-to-month contracts have a higher churn rate (59.81%) compared with yearly contracts.</p>
+<div class="panel">
+<h2>Project Conclusion</h2>
+<p>The analysis shows that customers with month-to-month contracts have a higher churn rate. Longer-term contracts show better retention in this dataset.</p>
+</div>
+</div>
+<footer>Customer Churn Analysis | Data Analytics Project</footer>
 
-    <h2>Tools Used</h2>
-    <p>Google Sheets, Data Cleaning, Data Analysis, Charts, GitHub</p>
+<script>
+new Chart(document.getElementById('churnChart'),{
+type:'doughnut',
+data:{labels:['Churned','Retained'],datasets:[{data:[247,353],backgroundColor:['#ef6474','#38bda5']}]},
+options:{responsive:true,plugins:{legend:{position:'bottom'},title:{display:true,text:'Customer Churn & Retention'}}}
+});
 
-    <h2>Project Conclusion</h2>
-    <p>Contract type is an important factor associated with customer churn. Customers on longer-term contracts show lower churn rates in this dataset.</p>
-  </div>
+new Chart(document.getElementById('contractChart'),{
+type:'bar',
+data:{labels:['Month-to-Month','One Year','Two Year'],datasets:[{label:'Churn Rate (%)',data:[59.81,20.12,20.83],backgroundColor:'#5288e8'}]},
+options:{responsive:true,plugins:{legend:{display:false},title:{display:true,text:'Churn by Contract Type'}},scales:{y:{beginAtZero:true,max:100}}}
+});
+
+new Chart(document.getElementById('contractRate'),{
+type:'bar',
+data:{labels:['Month-to-Month','One Year','Two Year'],datasets:[{label:'Churn Rate (%)',data:[59.81,20.12,20.83],backgroundColor:'#637ef0'}]},
+options:{responsive:true,scales:{y:{beginAtZero:true,max:100}}}
+});
+
+new Chart(document.getElementById('subscriptionRate'),{
+type:'bar',
+data:{labels:['Pro','Standard','Basic'],datasets:[{label:'Churn Rate (%)',data:[40.48,42.46,40.76],backgroundColor:'#38bda5'}]},
+options:{responsive:true,scales:{y:{beginAtZero:true,max:100}}}
+});
+</script>
 </body>
 </html>
